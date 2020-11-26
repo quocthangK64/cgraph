@@ -1,5 +1,6 @@
-project (cgraph C)
 cmake_minimum_required(VERSION 2.8)
+project (cgraph C)
+
 set(CMAKE_C_STANDARD 99)
 
 if (NOT CMAKE_BUILD_TYPE)
@@ -12,13 +13,19 @@ endif()
 
 include_directories(${CMAKE_SOURCE_DIR})
 add_subdirectory(examples)
+add_subdirectory(ctc)
 
 if (${CMAKE_PROJECT_NAME} STREQUAL cgraph)
   include(CTest)
 endif()
 
-set(cgraph_src cgraph_error.c cgraph_vector.c type_indexededgelist.c
-               structure_generators.c)
+set(cgraph_src 
+  cgraph_error.c 
+  cgraph_vector.c 
+  type_indexededgelist.c
+  structure_generators.c
+  visitors.c
+  cgraph_queue.c)
 
 add_library(cgraph STATIC ${cgraph_src})
 
@@ -32,4 +39,9 @@ if(${BUILD_TESTING})
   add_test(NAME CGraphIvecOrder COMMAND cgraph_ivec_order_ut)
   add_test(NAME CreateGraph COMMAND create_graph_ut)
   add_test(NAME CgraphNeighbors COMMAND cgraph_neighbors_ut)
+  add_test(NAME CgraphIncident COMMAND cgraph_incident_ut)
+  add_test(NAME CgraphIvecAsValue COMMAND cgraph_ivec_as_value_ut)
+  add_test(NAME CgraphIvecAsRef COMMAND cgraph_ivec_as_ref_ut)
+  add_test(NAME CgraphBfs COMMAND cgraph_bfs_ut)
+  add_test(NAME CgraphQueue COMMAND cgraph_queue_ut)
 endif()
