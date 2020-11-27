@@ -416,3 +416,36 @@ int cgraph_neighbors(const cgraph_t *graph,
   }
   return 0;
 }
+
+int cgraph_degree_all(const cgraph_t *graph, 
+                      cgraph_ivec_t *res,
+                      cgraph_neimode_t mode,
+                      bool loops) {
+  /*
+  TODO: Complete APIs and pass tests
+  */
+  
+  *res = cgraph_ivec_create();
+  CGRAPH_INTEGER i;
+  for(i=0;i<graph->n;i++){
+  cgraph_ivec_t neis = cgraph_ivec_create();
+  cgraph_neighbors(graph,&neis,i,mode);
+  cgraph_ivec_push_back(res,cgraph_ivec_size(neis));
+  cgraph_ivec_free(&neis);
+  }
+  return 0;
+}
+
+int cgraph_degree_one(const cgraph_t *graph,
+                      CGRAPH_INTEGER *res,
+                      const CGRAPH_INTEGER node,
+                      cgraph_neimode_t mode,
+                      bool loops) {
+  /*
+  TODO: Complete APIs and pass tests
+  */
+       cgraph_ivec_t neis = cgraph_ivec_create();
+       cgraph_neighbors(graph,&neis,node,mode);
+       *res =  cgraph_ivec_size(neis);
+  return 0;
+}
